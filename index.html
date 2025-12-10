@@ -27,30 +27,72 @@ function validate() {
   let age = document.getElementById("age").value;
   let marks = document.getElementById("marks").value;
 
-  // ---------- STRING FUNCTIONS ----------
+  // ---------- STRING FUNCTIONS (Name) ----------
   if (name.length == 0 || name.indexOf("0")!=-1 || name.indexOf("1")!=-1) {
     alert("Enter valid name");
     return false;
   }
 
-  if (email.indexOf("@") < 1 || email.lastIndexOf(".") < email.indexOf("@")+2) {
-    alert("Invalid Email");
+  // ---------- STRICT EMAIL CHECK ----------
+  let atPos = email.indexOf("@");
+  let dotPos = email.lastIndexOf(".");
+
+  // basic format
+  if (atPos < 1 || dotPos < atPos + 2 || dotPos + 2 >= email.length) {
+    alert("Invalid Email Format");
     return false;
   }
 
-  if (phone.length != 10 || "6789".indexOf(phone.charAt(0)) == -1) {
-    alert("Invalid Phone Number");
+  // allowed email domains ONLY
+  let validEmails = [
+    "@gmail.com",
+    "@yahoo.com",
+    "@outlook.com",
+    "@hotmail.com",
+    "@rediffmail.com",
+    "@protonmail.com"
+  ];
+
+  let isValidEmail = false;
+  for (let i = 0; i < validEmails.length; i++) {
+    if (email.endsWith(validEmails[i])) {    // string function endsWith()
+      isValidEmail = true;
+      break;
+    }
+  }
+
+  if (!isValidEmail) {
+    alert("Enter a valid email like Gmail, Yahoo, Outlook etc.");
     return false;
   }
 
-  // ---------- MATH FUNCTIONS ----------
-  age = Math.floor(age);       // integer age  
-  marks = Math.round(marks);   // round marks
-
-  if (age < 15 || age > 30) {
-    alert("Age must be 15 - 30");
+  // ---------- STRING FUNCTIONS (Phone) ----------
+  if (phone.length != 10) {
+    alert("Phone must be 10 digits");
     return false;
   }
+
+  let firstDigit = phone.charAt(0);          // string: charAt()
+  if (firstDigit == "0") {
+    alert("Phone number cannot start with 0");
+    return false;
+  }
+
+  if (isNaN(Number(phone))) {                // must be digits
+    alert("Phone must contain only digits");
+    return false;
+  }
+
+  // ---------- MATH FUNCTIONS (Age) ----------
+  age = Math.floor(age);     // integer age
+
+  if (age < 12 || age > 50) {
+    alert("Age must be between 12 and 50");
+    return false;
+  }
+
+  // ---------- MATH FUNCTIONS (Marks) ----------
+  marks = Math.round(marks); // round marks
 
   if (marks < 0 || marks > 100) {
     alert("Marks must be 0 - 100");
