@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student Registration</title>
+</head>
+<body>
+
+<h2>Student Registration Form</h2>
+
+<form onsubmit="return validate();">
+
+  Name: <input type="text" id="name"><br><br>
+  Email: <input type="text" id="email"><br><br>
+  Phone: <input type="text" id="phone"><br><br>
+  Age: <input type="number" id="age"><br><br>
+  Marks (%): <input type="number" id="marks"><br><br>
+
+  <input type="submit" value="Register">
+
+</form>
+
+<script>
+function validate() {
+  let name = document.getElementById("name").value.trim();
+  let email = document.getElementById("email").value.trim();
+  let phone = document.getElementById("phone").value.trim();
+  let age = document.getElementById("age").value;
+  let marks = document.getElementById("marks").value;
+
+  // ---------- STRING FUNCTIONS ----------
+  if (name.length == 0 || name.indexOf("0")!=-1 || name.indexOf("1")!=-1) {
+    alert("Enter valid name");
+    return false;
+  }
+
+  if (email.indexOf("@") < 1 || email.lastIndexOf(".") < email.indexOf("@")+2) {
+    alert("Invalid Email");
+    return false;
+  }
+
+  if (phone.length != 10 || "6789".indexOf(phone.charAt(0)) == -1) {
+    alert("Invalid Phone Number");
+    return false;
+  }
+
+  // ---------- MATH FUNCTIONS ----------
+  age = Math.floor(age);       // integer age  
+  marks = Math.round(marks);   // round marks
+
+  if (age < 15 || age > 30) {
+    alert("Age must be 15 - 30");
+    return false;
+  }
+
+  if (marks < 0 || marks > 100) {
+    alert("Marks must be 0 - 100");
+    return false;
+  }
+
+  alert("Registration Successful!");
+  return true;
+}
+</script>
+
+</body>
+</html>
